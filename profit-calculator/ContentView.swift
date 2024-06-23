@@ -6,9 +6,16 @@ struct ContentView: View {
     @State private var selectedMarketCommissionPercentage: Int = 30
     @State private var selectedStateCommissionPercentage: Int = 30
     
+    @FocusState private var focusedField: Field?
+    
     private let marketCommissionPercentages = [10, 15, 20, 25, 30]
     private let stateCommissionPercentages = [10, 15, 20, 25, 30]
     private let usdToTryRate: Decimal = 32.00
+    
+    enum Field {
+        case numberOfCopies
+        case pricePerCopy
+    }
     
     var calculateProfit: Decimal {
         guard let numberOfCopiesSold = Int(numberOfCopiesSoldString),
@@ -31,11 +38,13 @@ struct ContentView: View {
                 Section(header: Text("Number of Copies Sold")) {
                     TextField("Enter Count", text: $numberOfCopiesSoldString)
                         .keyboardType(.numberPad)
+                        .focused($focusedField, equals: .numberOfCopies)
                 }
                 
                 Section(header: Text("Price per Copy (USD)")) {
                     TextField("Price", text: $pricePerCopyString)
                         .keyboardType(.decimalPad)
+                        .focused($focusedField, equals: .pricePerCopy)
                 }
                 
                 Section(header: Text("Market Commission Percentage")) {
@@ -65,6 +74,13 @@ struct ContentView: View {
             }
             .navigationTitle("App Profit Calculator")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    Button("Done") {
+                        focusedField = nil
+                    }
+                }
+            }
         }
     }
 }
