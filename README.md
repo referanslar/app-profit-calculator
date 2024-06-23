@@ -5,5 +5,5 @@ A SwiftUI-based iOS application that helps app developers calculate their potent
 ### Screens
 
 <div style="float: left;">
-    <img src="assets/1.png" style="width: 80%;" />
+    <img src="assets/1.png" style="width: 40%;" />
 </div>
